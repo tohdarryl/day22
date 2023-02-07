@@ -99,4 +99,19 @@ public class RSVPController {
 
         return new ResponseEntity<>(rsvpCount,HttpStatus.OK);
     }
+
+    @PostMapping("/batch")
+    public ResponseEntity<Integer> batchInsertRSVP(@RequestBody List<RSVP> rsvp) {
+     
+        List<RSVP> r = rsvp;
+        int[] batch = rsvpRepo.batchInsert(r);
+
+        if(batch.length > 0){
+            return new ResponseEntity<>(batch.length, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(0, HttpStatus.NOT_ACCEPTABLE);
+        }
+   
+
+    }
 }
